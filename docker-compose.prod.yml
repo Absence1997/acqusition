@@ -1,0 +1,26 @@
+name: neon-docker-app-prod
+
+services:
+  # -----------------------------------------------------------------------
+  # Production: no Neon Local, no proxy container. The app talks directly
+  # to your real Neon Cloud endpoint over TLS. DATABASE_URL is supplied
+  # entirely via environment / secrets — never hardcoded, never baked
+  # into the image.
+  # -----------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: neon-docker-app:latest
+    container_name: app-prod
+    env_file:
+      - .env.production
+    ports:
+      - '${PORT:-3000}:3000'
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

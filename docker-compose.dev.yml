@@ -1,0 +1,22 @@
+name: neon-docker-app-dev
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-dev
+    env_file:
+      - .env.development
+    ports:
+      - '${PORT:-3000}:3000'
+    # Hot-reload the app on file changes using Node's built-in watch mode.
+    command: ['node', '--watch', 'src/server.js']
+    volumes:
+      - ./src:/app/src:ro
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
