@@ -1,7 +1,6 @@
-import aj from '#config/arcjet.js';
+import aj from '../config/arcjet.js';
 import {slidingWindow} from "@arcjet/node";
-import logger from "#config/logger.js";
-import req from "express/lib/request.js";
+import logger from '../config/logger.js';
 
 export default async function securityMiddleware(req, res, next) {
     try{

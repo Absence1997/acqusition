@@ -1,8 +1,8 @@
-import logger from '#config/logger.js';
+import logger from '../config/logger.js';
 import bcrypt from 'bcrypt';
-import { users } from '#models/users.model.js';
+import { users } from '../models/users.model.js';
 import { eq } from 'drizzle-orm';
-import { db } from '#config/database.js';
+import { db } from '../config/database.js';
 
 export const hashPassword = async password => {
   try {

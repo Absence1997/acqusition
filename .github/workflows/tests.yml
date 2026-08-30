@@ -1,0 +1,98 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Run Test Suite
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: test
+      NODE_OPTIONS: --experimental-vm-modules
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with coverage
+        id: run_tests
+        run: |
+          npm test -- \
+            --ci \
+            --coverageReporters=json-summary \
+            --coverageReporters=text \
+            --coverageReporters=lcov \
+            --coverageReporters=clover
+        continue-on-error: true
+
+      - name: Annotate test failures
+        if: steps.run_tests.outcome == 'failure'
+        run: |
+          echo "::error title=Tests failed::One or more tests failed. Expand the 'Run tests with coverage' step above for the failing test names and stack traces."
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Generate test & coverage summary
+        if: always()
+        run: |
+          {
+            echo "## Test Results"
+            echo ""
+            if [ "${{ steps.run_tests.outcome }}" == "success" ]; then
+              echo "✅ **All tests passed**"
+            else
+              echo "❌ **Tests failed** — see the job logs above for details"
+            fi
+            echo ""
+            if [ -f coverage/coverage-summary.json ]; then
+              echo "### Coverage Summary"
+              echo ""
+              echo "| Metric | Coverage |"
+              echo "| --- | --- |"
+              LINES=$(node -p "require('./coverage/coverage-summary.json').total.lines.pct")
+              STATEMENTS=$(node -p "require('./coverage/coverage-summary.json').total.statements.pct")
+              FUNCTIONS=$(node -p "require('./coverage/coverage-summary.json').total.functions.pct")
+              BRANCHES=$(node -p "require('./coverage/coverage-summary.json').total.branches.pct")
+              echo "| Lines | ${LINES}% |"
+              echo "| Statements | ${STATEMENTS}% |"
+              echo "| Functions | ${FUNCTIONS}% |"
+              echo "| Branches | ${BRANCHES}% |"
+              echo ""
+              echo "Full report uploaded as the \`coverage-report\` artifact (retained 30 days)."
+            else
+              echo "_No coverage summary was generated._"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail workflow if tests failed
+        if: steps.run_tests.outcome == 'failure'
+        run: exit 1

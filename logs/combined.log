@@ -44,3 +44,18 @@
 {"level":"info","message":"User mahul created successfully.","service":"acquisitons-api"}
 {"level":"info","message":"User registered successfully: mahul@devops.com","service":"acquisitons-api"}
 {"level":"info","message":"::1 - - [29/Aug/2026:07:01:15 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 201 87 \"-\" \"HTTPie\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:41:34 +0000] \"GET /health HTTP/1.1\" 200 73 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:41:34 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:41:34 +0000] \"GET /nonexistent HTTP/1.1\" 404 27 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:44:59 +0000] \"GET /health HTTP/1.1\" 200 73 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:44:59 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:44:59 +0000] \"GET /nonexistent HTTP/1.1\" 404 27 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:47:03 +0000] \"GET /health HTTP/1.1\" 200 73 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:47:03 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:47:03 +0000] \"GET /nonexistent HTTP/1.1\" 404 27 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:48:59 +0000] \"GET /health HTTP/1.1\" 200 73 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:48:59 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:48:59 +0000] \"GET /nonexistent HTTP/1.1\" 404 28 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:50:13 +0000] \"GET /health HTTP/1.1\" 200 73 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:50:13 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"-\"","service":"acquisitons-api"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [30/Aug/2026:02:50:13 +0000] \"GET /nonexistent HTTP/1.1\" 404 29 \"-\" \"-\"","service":"acquisitons-api"}

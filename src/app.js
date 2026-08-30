@@ -1,11 +1,13 @@
 import express from 'express';
-import logger from '#config/logger.js';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import securityMiddleware from '#middleware/security.middleware.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import authRoutes from '#routes/auth.routes.js';
+// ✅ relative paths — sidesteps the Jest subpath-imports bug
+import logger from './config/logger.js';
+import securityMiddleware from './middleware/security.middleware.js';
+import authRoutes from './routes/auth.routes.js';
+import usersRoutes from './routes/users.routes.js';
 
 const app = express();
 
@@ -22,7 +24,7 @@ app.use(
 app.use(securityMiddleware);
 
 app.get('/', (req, res) => {
-  logger.info('Hello from Acquisiton');
+  logger.info('Hello from Acquisition');
 
   res.status(200).send('Hello for Acquisition');
 });
@@ -30,7 +32,7 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
-    timestamp: new Date().toISOString,
+    timestamp: new Date().toISOString(),
     uptime: process.uptime(),
   });
 });
@@ -40,5 +42,9 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
+app.use((req, res) => {
+  res.status(404).json({error: 'Routes not found!'});
+})
 
 export default app;
